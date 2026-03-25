@@ -46,12 +46,17 @@ const handleSend = async () => {
   messages.value.push({ role: 'assistant', content: '正在思考...' })
 
   try {
-    const response = await fetch('/api/chat', {
+    const response = await fetch('https://sea-ruby-sigma.vercel.app/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ message: text })
+      body: JSON.stringify({ 
+        messages: [
+          { role: 'system', content: '你是一个专业的海洋科学助手，帮助用户解答关于海洋生物、海洋生态、海洋监测等方面的问题。' },
+          { role: 'user', content: text }
+        ]
+      })
     })
 
     const data = await response.json()
